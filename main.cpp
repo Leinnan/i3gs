@@ -22,9 +22,10 @@ int main(int argc, char **argv)
     bat.setCommand("/home/piotr/.skrypty/i3_battery.sh");
     bat.useMarkup();
     
-    ram.setCommand("free | tail -2 | head -1 | awk '{print $3/$2 * 100.0}' | awk '{printf(\"%d%\",$1 + 0.5)}'");
-    ram.setTitle("<span weight='heavy' fgcolor='#198844'>   </span>");
+    ram.setCommand("free | tail -2 | head -1 | awk '{print $3/$2 * 100.0}' | awk '{printf(\"%d% \",$1 + 0.5)}'");
+    ram.setTitle("<span weight='heavy' fgcolor='#cdcdcd'>   </span> ");
     ram.setBordersColor("#198844");
+    ram.setBackground("#198844");
     ram.useMarkup();
     
     cpu.setCommand("grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage }' | awk '{printf(\"%d%\",$1 + 0.5)}' ");

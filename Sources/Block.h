@@ -39,9 +39,13 @@ public:
     {
         this->separator_block_width = separator_block_width;
     }
-    void setTitle(const std::string& title)
+    void setTitle(const std::string& p_title)
     {
-        this->title = title;
+        this->title = p_title;
+    }
+    void setBackground(const std::string& p_background)
+    {
+        this->background = p_background;
     }
     void setBordersWidth(const std::array<int, 4> p_borders_width){
         this->borders_width = p_borders_width;
@@ -53,6 +57,7 @@ private:
     std::string command = "echo \"none\"";
     std::string title = "";
     std::string content = "";
+    std::string background = "none";
     std::array<int, 4> borders_width{ { 0, 0, 2, 0 } };
     int separator_block_width = 10;
     std::string borders_color = "none";

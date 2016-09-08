@@ -27,6 +27,8 @@ std::string Block::getFullText(){
         m_result += ",\"markup\":\"pango\"";
     else
         m_result += ",\"markup\":\"none\"";
+    if(this->background != "none")
+        m_result += ", \"background\": \"" + this->background + "\"";
     if(this->borders_color != "none")
         m_result += ", \"border\": \"" + this->borders_color + "\"";
     m_result += ", \"border_bottom\": " + std::to_string(borders_width[2]);
