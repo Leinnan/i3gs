@@ -35,6 +35,7 @@ std::string Block::getFullText(){
     m_result += ",\"border_right\": " + std::to_string(borders_width[1]);
     m_result += ",\"border_left\": " + std::to_string(borders_width[3]);
     m_result += ",\"border_top\":" + std::to_string(borders_width[0]);
+    m_result += ", \"color\": \"" + this->color + "\"";
     m_result += " }";
     if(this->content == ""){
         m_result = "{\"full_text\":\"\"}";

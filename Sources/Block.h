@@ -27,9 +27,9 @@ public:
     {
         this->borders_color = borders_color;
     }
-    void setColor(const std::string& color)
+    void setColor(const std::string& p_color)
     {
-        this->color = color;
+        this->color = p_color;
     }
     void setCommand(const std::string& command)
     {
@@ -47,8 +47,16 @@ public:
     {
         this->background = p_background;
     }
-    void setBordersWidth(const std::array<int, 4> p_borders_width){
+    void setBordersWidth(const std::array<int, 4> p_borders_width)
+    {
         this->borders_width = p_borders_width;
+    }
+    void setBordersWidth(const int& p_border_width_1, const int& p_border_width_2, const int& p_border_width_3, const int& p_border_width_4)
+    {
+        this->borders_width[0] = p_border_width_1;
+        this->borders_width[1] = p_border_width_2;
+        this->borders_width[2] = p_border_width_3;
+        this->borders_width[3] = p_border_width_4;
     }
     void useMarkup(bool p_use_markup = true){
         this->using_markup = p_use_markup;
