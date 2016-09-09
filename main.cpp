@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <iostream>
 #include "Sources/Block.h"
 
@@ -12,17 +13,20 @@ int main(int argc, char **argv)
     Block hdd;
     Block date;
     
-    mpd.setTitle("<span weight='heavy' fgcolor='#e66601'>   </span>");
+    mpd.setTitle("<span weight='heavy' fgcolor='#2f343f'>   </span>");
     mpd.setColor("#2f343f");
-    mpd.setBackground("#E3DBC8");
-    mpd.setBordersColor("#E3DBC8");
+    mpd.setBackground("#E66601");
+    mpd.setBordersColor("#E66601");
     mpd.setBordersWidth(2,2,2,2);
     mpd.setCommand("/home/piotr/.skrypty/i3_mpd_status.sh");
     mpd.useMarkup();
     mpd.setSeparatorBlockWidth(0);
     
-    bat.setTitle("<span weight='heavy' fgcolor='#407ee7'>   </span>");
-    bat.setBordersColor("#407ee7");
+    bat.setTitle("<span weight='heavy' fgcolor='#2f343f'>   </span>");
+    bat.setBordersColor("#AAAAAA");
+    bat.setBackground("#AAAAAA");
+    bat.setColor("#2f343f");
+    bat.setBordersWidth(2,2,2,2);
     bat.setCommand("/home/piotr/.skrypty/i3_battery.sh");
     bat.useMarkup();
     bat.setSeparatorBlockWidth(0);
@@ -32,7 +36,7 @@ int main(int argc, char **argv)
     ram.setBordersColor("#93B470");
     ram.setColor("#2f343f");
     ram.setBackground("#93B470");
-    ram.setBordersWidth(2,0,2,0);
+    ram.setBordersWidth(2,2,2,2);
     ram.useMarkup();
     ram.setSeparatorBlockWidth(0);
     
@@ -54,11 +58,11 @@ int main(int argc, char **argv)
     hdd.useMarkup();
     hdd.setSeparatorBlockWidth(0);
     
-    date.setCommand("date '+%A, %H:%M:%S'");
+    date.setCommand("date '+%A, %H:%M:%S '");
     date.setColor("#2f343f");
     date.setBackground("#DACAB6");
-    
-    
+    date.setTitle("<span weight='heavy' fgcolor='#2f343f'>   </span>");    
+    date.useMarkup();    
     
     cout << "{\"version\":1,\"click_events\":true}" << endl;
     cout << "[[]" << endl;
@@ -78,6 +82,7 @@ int main(int argc, char **argv)
         cout << "," << hdd.getFullText();
         cout << "," << date.getFullText();
         cout << "]" << endl; 
+        usleep(3000000);
     }
     return 0;
 }
