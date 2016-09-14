@@ -8,12 +8,22 @@ Manager::Manager(const std::string& p_config_path)
 {
     this->sleeep_time = 10000;
     this->is_running = false;
+    libconfig::Config config;
+    
+    try {
+        config.readFile(p_config_path.c_str());
+    }
+    catch(const libconfig::FileIOException &fioex)
+    {
+        std::cerr << "FILE NOT FOUND!" << std::endl;
+        return;
+    }
 }
 
 
 void Manager::start() {
     this->is_running = true;
-    std::cout << "{\"version\":1,\"click_events\":true}\n[[]" << std::endl;
+    std::cout << "{\"version\":1,\"click_events\":false}\n[[]" << std::endl;
     while(this->is_running){
         this->update();
         usleep(this->sleeep_time);
