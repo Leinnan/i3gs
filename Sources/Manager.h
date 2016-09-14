@@ -8,6 +8,7 @@
 #include <string>
 #include <unistd.h>
 #include <iostream>
+#include <libconfig.h++>
 #include "Block.h"
 
 using namespace std;
