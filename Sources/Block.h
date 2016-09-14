@@ -11,6 +11,7 @@
 enum block_align { LEFT, CENTER, RIGHT };
 
 
+
 class Block
 {
 public:

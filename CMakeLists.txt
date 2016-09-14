@@ -8,13 +8,15 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 ## Set our project name
 project(${PROJECT_NAME})
 
+
+
 ## Use all the *.cpp files we found under this folder for the project
 FILE(GLOB SRCS "*.cpp" "*.c")
 
 set(SOURCE_FILES
     Sources/Block.h
     Sources/Block.cpp
-    main.cpp)
+    main.cpp Sources/Manager.cpp Sources/Manager.h)
 
 ## Define the executable
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
