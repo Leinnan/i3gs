@@ -87,27 +87,5 @@ int main(int argc, char **argv)
     status.addBlock(date);
 
     status.start();
-    cout << "{\"version\":1,\"click_events\":true}" << endl;
-    cout << "[[]" << endl;
-    while(true){
-        mp3.updateText();
-        mpd.updateText();
-        bat.updateText();
-        hdd.updateText();
-        ram.updateText();
-        cpu.updateText();
-        date.updateText();
-
-        cout << ",[";
-        cout << mp3.getFullText();
-        cout << "," << mpd.getFullText();
-        cout << "," << bat.getFullText();
-        cout << "," << ram.getFullText();
-        cout << "," << cpu.getFullText();
-        cout << "," << hdd.getFullText();
-        cout << "," << date.getFullText();
-        cout << "]" << endl;
-        usleep(3000000);
-    }
     return 0;
 }
