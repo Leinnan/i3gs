@@ -6,7 +6,7 @@
 
 Manager::Manager(const std::string& p_config_path)
 {
-    this->sleeep_time = 10000;
+    this->sleep_time = 10000;
     this->is_running = false;
     libconfig::Config config;
     
@@ -26,7 +26,7 @@ void Manager::start() {
     std::cout << "{\"version\":1,\"click_events\":false}\n[[]" << std::endl;
     while(this->is_running){
         this->update();
-        usleep(this->sleeep_time);
+        usleep(this->sleep_time);
     }
 }
 
@@ -59,12 +59,12 @@ void Manager::update()
     std::cout << output;
 }
 
-int Manager::getSleeep_time() const {
-    return sleeep_time;
+int Manager::getSleep_time() const {
+    return sleep_time;
 }
 
-void Manager::setSleeep_time(int sleeep_time) {
-    Manager::sleeep_time = sleeep_time;
+void Manager::setSleep_time(int sleep_time) {
+    Manager::sleep_time = sleep_time;
 }
 
 const string &Manager::getDefault_color() const {

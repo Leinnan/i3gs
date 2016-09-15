@@ -18,13 +18,13 @@ public:
     Manager(const std::string& p_config_path);
     void start();
     void addBlock(Block p_block);
-    int getSleeep_time() const;
-    void setSleeep_time(int sleeep_time);
+    int getSleep_time() const;
+    void setSleep_time(int sleep_time);
     const string &getDefault_color() const;
     void setDefault_color(const string &default_color);
 private:
     void update();
-    int sleeep_time;
+    int sleep_time;
     bool is_running;
     std::vector < Block > blocks;
     std::string default_color = "#CDCDCD";
