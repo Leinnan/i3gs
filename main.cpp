@@ -5,8 +5,12 @@
 
 using namespace std;
 
-int main(int argc, char **argv)
+int main(int argc, char* argv[])
 {
+    std::string config_path = "none";
+    if(argc > 1){
+        config_path = argv[1];
+    }
     Block mp3;
     Block mpd;
     Block bat;
@@ -14,8 +18,8 @@ int main(int argc, char **argv)
     Block cpu;
     Block hdd;
     Block date;
-    Manager status("/home/piotr/.i3gs.cfg");
-    
+    Manager status(config_path);
+
     mp3.setTitle("<span weight='heavy' fgcolor='#2f343f'>   </span>");
     mp3.setColor("#2f343f");
     mp3.setBackground("#0074D9");

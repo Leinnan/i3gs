@@ -15,7 +15,7 @@ using namespace std;
 
 class Manager {
 public:
-    Manager(const std::string& p_config_path);
+    Manager(const std::string& p_config_path = "none");
     void start();
     void addBlock(Block p_block);
     int getSleep_time() const;

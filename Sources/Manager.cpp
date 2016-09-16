@@ -9,7 +9,10 @@ Manager::Manager(const std::string& p_config_path)
     this->sleep_time = 10000;
     this->is_running = false;
     libconfig::Config config;
-    
+
+    if(p_config_path == "none")
+        return;
+
     try {
         config.readFile(p_config_path.c_str());
     }
