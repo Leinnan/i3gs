@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 ## Use the variable PROJECT_NAME for changing the target name
 set( PROJECT_NAME "i3gs" )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -lconfig++")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -std=c++14")
 
 ## Set our project name
 project(${PROJECT_NAME})
