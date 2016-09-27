@@ -10,7 +10,7 @@ Manager::Manager(const std::string& p_config_path)
     this->is_running = false;
 
     if(p_config_path == "none")
-        this->readConfigFile("/home/piotr/i3gs_config");
+        return;
     else
         this->readConfigFile(p_config_path);
 
