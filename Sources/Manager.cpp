@@ -114,7 +114,7 @@ void Manager::addBlock(Block p_block)
 void Manager::update()
 {
     std::string output = ",\n[";
-    for(int i = 0; i < blocks.size(); i++){
+    for(unsigned int i = 0; i < blocks.size(); i++){
         // for now always update text
         // in future I need to implement better way to handle this
         blocks[i].updateText();
