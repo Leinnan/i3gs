@@ -20,3 +20,5 @@ set(SOURCE_FILES
 
 ## Define the executable
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+
+install(TARGETS ${PROJECT_NAME} DESTINATION /usr/bin)

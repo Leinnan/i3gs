@@ -8,7 +8,7 @@ mkdir build
 cd build 
 cmake ..
 make
-sudo cp ./i3gs /usr/bin/i3gs
+sudo make install
 ```
 
 For now I dont have any installation progress so this is only way to get it done.
