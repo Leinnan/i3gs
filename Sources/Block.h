@@ -36,6 +36,10 @@ public:
     {
         this->command = command;
     }
+    void setName(const std::string& name)
+    {
+        this->name = name;
+    }
     void setSeparatorBlockWidth(int separator_block_width)
     {
         this->separator_block_width = separator_block_width;
@@ -62,9 +66,11 @@ public:
     void useMarkup(bool p_use_markup = true){
         this->using_markup = p_use_markup;
     }
+    void resetValues();
 private:
     std::string command = "echo \"none\"";
     std::string title = "";
+    std::string name = "";
     std::string content = "";
     std::string background = "none";
     std::array<int, 4> borders_width{ { 0, 0, 2, 0 } };

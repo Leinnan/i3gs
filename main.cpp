@@ -82,13 +82,13 @@ int main(int argc, char* argv[])
     date.setTitle("<span weight='heavy' fgcolor='#2f343f'>   </span>");
     date.useMarkup();
 
-    status.addBlock(mp3);
-    status.addBlock(mpd);
-    status.addBlock(bat);
-    status.addBlock(hdd);
-    status.addBlock(ram);
-    status.addBlock(cpu);
-    status.addBlock(date);
+//    status.addBlock(mp3);
+//    status.addBlock(mpd);
+//    status.addBlock(bat);
+//    status.addBlock(hdd);
+//    status.addBlock(ram);
+//    status.addBlock(cpu);
+//    status.addBlock(date);
 
     status.start();
     return 0;

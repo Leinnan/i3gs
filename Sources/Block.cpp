@@ -21,7 +21,7 @@ void Block::updateText(){
 std::string Block::getFullText(){
     std::string m_result  = "{\"\":\"\",\"full_text\":\"";
     m_result += this->title + " " + this->content;
-    m_result += "\",\"name\":\"" + this->title;
+    m_result += "\",\"name\":\"" + this->name;
     m_result += "\",\"separator_block_width\":" + std::to_string(this->separator_block_width);
     if(this->using_markup)
         m_result += ",\"markup\":\"pango\"";
@@ -41,4 +41,17 @@ std::string Block::getFullText(){
         m_result = "{\"full_text\":\"\"}";
     }
     return m_result;
+}
+
+void Block::resetValues() {
+
+    this->command = "echo \"none\"";
+    this->title = "";
+    this->content = "";
+    this->background = "none";
+    this->borders_width = { { 0, 0, 2, 0 } };
+    this->separator_block_width = 10;
+    this->borders_color = "none";
+    this->color = "#cdcdcd";
+    this->using_markup = false;
 }

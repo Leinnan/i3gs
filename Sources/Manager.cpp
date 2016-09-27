@@ -10,10 +10,92 @@ Manager::Manager(const std::string& p_config_path)
     this->is_running = false;
 
     if(p_config_path == "none")
-        return;
+        this->readConfigFile("/home/piotr/i3gs_config");
+    else
+        this->readConfigFile(p_config_path);
 
 }
 
+void Manager::readConfigFile(const std::string& p_config_path)
+{
+    std::ifstream config_file(p_config_path.c_str());
+    std::string one_line;
+    Block config_block;
+
+    bool is_before_blocks = true;
+    if(!config_file.good()){
+        return;
+    }
+    while(std::getline(config_file, one_line)){
+        if(!isStringStartWith(one_line, "[")){
+            if(is_before_blocks){
+                if(isStringStartWith(one_line, "default_color")){
+                    this->default_color = getAllAfterEqualSign(one_line);
+                }
+            }
+            else{
+                if(isStringStartWith(one_line, "title")){
+                    config_block.setTitle(getAllAfterEqualSign(one_line));
+                }
+                if(isStringStartWith(one_line, "color")){
+                    config_block.setColor(getAllAfterEqualSign(one_line));
+                }
+                if(isStringStartWith(one_line, "bg_color")){
+                    config_block.setBackground(getAllAfterEqualSign(one_line));
+                }
+                if(isStringStartWith(one_line, "borders_color")){
+                    config_block.setBordersColor(getAllAfterEqualSign(one_line));
+                }
+                if(isStringStartWith(one_line, "command")){
+                    config_block.setCommand(getAllAfterEqualSign(one_line));
+                }
+                if(isStringStartWith(one_line, "separator_width")){
+                    config_block.setSeparatorBlockWidth(std::stoi(getAllAfterEqualSign(one_line)));
+                }
+                if(isStringStartWith(one_line, "borders_width")){
+                    std::array<int, 4> borders_width{ { 0, 0, 2, 0 } };
+                    std::string borders_width_string = getAllAfterEqualSign(one_line);
+                    unsigned int spaces_in_result = 0;
+
+                    for(unsigned int i = 0; i < borders_width_string.size() - 1; i++){
+                        if(borders_width_string[i] == ' ' && borders_width_string[i+1] != ' ' ){
+                            spaces_in_result++;
+                        }
+                    }
+                    if(spaces_in_result >= 3){
+                        istringstream iss(borders_width_string);
+                        int one_border_width = 0;
+                        unsigned int i = 0;
+                        while(iss >> one_border_width && i <= 3){
+                            borders_width[i] = one_border_width;
+                            i++;
+                        }
+                        config_block.setBordersWidth(borders_width);
+                    }
+
+                }
+                if(isStringStartWith(one_line, "pango")){
+                    if(one_line.find("true"))
+                        config_block.useMarkup(true);
+                    else
+                        config_block.useMarkup(false);
+                }
+            }
+        }
+        else{
+            if(!is_before_blocks){
+                this->addBlock(config_block);
+            }
+            config_block.resetValues();
+            config_block.setName(getAllBetweenBrackets(one_line));
+            is_before_blocks = false;
+        }
+
+
+    }
+    if(!is_before_blocks)
+        this->addBlock(config_block);
+}
 
 void Manager::start() {
     this->is_running = true;
