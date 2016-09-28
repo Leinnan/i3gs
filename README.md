@@ -83,6 +83,10 @@ pango=true
 separator_width=0
 borders_width=3 3 3 3
 ```
+And this is effect:
+
+![SCREEN](http://i.imgur.com/EvkJjXT.jpg)
+
 
 If you want to use config file just set status_command like this:
 ```
