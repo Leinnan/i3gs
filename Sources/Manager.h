@@ -33,8 +33,8 @@ public:
     Manager(const std::string& p_config_path = "none");
     void start();
     void addBlock(Block p_block);
-    int getSleep_time() const;
-    void setSleep_time(int sleep_time);
+    int getSleepTime() const;
+    void setSleepTime(int sleep_time);
     const string &getDefault_color() const;
     void setDefault_color(const string &default_color);
 private:
@@ -44,6 +44,14 @@ private:
     bool is_running;
     std::vector < Block > blocks;
     std::string default_color = "#CDCDCD";
+    std::string default_title = "";
+    std::string default_name = "";
+    std::string default_content = "";
+    std::string default_background = "none";
+    std::string default_borders_color = "none";
+    std::array<int, 4> default_borders_width{ { 0, 0, 2, 0 } };
+    int default_separator_block_width = 10;
+    bool default_using_markup = false;
 
 };
 

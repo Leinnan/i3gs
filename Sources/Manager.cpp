@@ -29,8 +29,36 @@ void Manager::readConfigFile(const std::string& p_config_path)
     while(std::getline(config_file, one_line)){
         if(!isStringStartWith(one_line, "[")){
             if(is_before_blocks){
-                if(isStringStartWith(one_line, "default_color")){
+                if(isStringStartWith(one_line, "color")){
                     this->default_color = getAllAfterEqualSign(one_line);
+                }
+                if(isStringStartWith(one_line, "pango")){
+                    if(one_line.find("true"))
+                        default_using_markup = true;
+                    else
+                        default_using_markup = false;
+                }
+                if(isStringStartWith(one_line, "borders_width")){
+                    std::array<int, 4> borders_width{ { 0, 0, 2, 0 } };
+                    std::string borders_width_string = getAllAfterEqualSign(one_line);
+                    unsigned int spaces_in_result = 0;
+
+                    for(unsigned int i = 0; i < borders_width_string.size() - 1; i++){
+                        if(borders_width_string[i] == ' ' && borders_width_string[i+1] != ' ' ){
+                            spaces_in_result++;
+                        }
+                    }
+                    if(spaces_in_result >= 3){
+                        istringstream iss(borders_width_string);
+                        int one_border_width = 0;
+                        unsigned int i = 0;
+                        while(iss >> one_border_width && i <= 3){
+                            borders_width[i] = one_border_width;
+                            i++;
+                        }
+                        default_borders_width = borders_width;
+                    }
+
                 }
             }
             else{
@@ -87,6 +115,8 @@ void Manager::readConfigFile(const std::string& p_config_path)
                 this->addBlock(config_block);
             }
             config_block.resetValues();
+            config_block.useMarkup(this->default_using_markup);
+			config_block.setBordersWidth(this->default_borders_width);
             config_block.setName(getAllBetweenBrackets(one_line));
             is_before_blocks = false;
         }
@@ -135,11 +165,11 @@ void Manager::update()
     std::cout << output;
 }
 
-int Manager::getSleep_time() const {
+int Manager::getSleepTime() const {
     return sleep_time;
 }
 
-void Manager::setSleep_time(int sleep_time) {
+void Manager::setSleepTime(int sleep_time) {
     Manager::sleep_time = sleep_time;
 }
 

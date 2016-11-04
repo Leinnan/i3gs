@@ -73,10 +73,10 @@ private:
     std::string name = "";
     std::string content = "";
     std::string background = "none";
-    std::array<int, 4> borders_width{ { 0, 0, 2, 0 } };
-    int separator_block_width = 10;
     std::string borders_color = "none";
     std::string color = "#cdcdcd";
+    std::array<int, 4> borders_width{ { 0, 0, 2, 0 } };
+    int separator_block_width = 10;
     block_align align;
     bool using_markup = false;
 };
