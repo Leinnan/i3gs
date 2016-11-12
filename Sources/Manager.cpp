@@ -6,7 +6,7 @@
 
 Manager::Manager(const std::string& p_config_path)
 {
-    this->sleep_time = 10000;
+    this->sleep_time = 1;
     this->is_running = false;
 
     this->generatePresets();
@@ -32,7 +32,10 @@ void Manager::readConfigFile(const std::string& p_config_path)
         if(!isStringStartWith(one_line, "[")){
             if(is_before_blocks){
                 if(isStringStartWith(one_line, "color")){
-                    this->default_color = getAllAfterEqualSign(one_line);
+                    this->setDefault_color(getAllAfterEqualSign(one_line));
+                }
+                if(isStringStartWith(one_line, "sleep_time")){
+                    this->setSleepTime(std::stoi(getAllAfterEqualSign(one_line)));
                 }
                 if(isStringStartWith(one_line, "bg_color")){
                     this->default_background = getAllAfterEqualSign(one_line);
@@ -47,10 +50,7 @@ void Manager::readConfigFile(const std::string& p_config_path)
                     this->default_separator_block_width = std::stoi(getAllAfterEqualSign(one_line));
                 }
                 if(isStringStartWith(one_line, "pango")){
-                    if(one_line.find("true"))
-                        default_using_markup = true;
-                    else
-                        default_using_markup = false;
+                    default_using_markup = one_line.find("true");
                 }
                 if(isStringStartWith(one_line, "borders_width")){
                     std::array<int, 4> borders_width{ { 0, 0, 2, 0 } };
@@ -151,10 +151,15 @@ void Manager::readConfigFile(const std::string& p_config_path)
 
 void Manager::start() {
     this->is_running = true;
+    unsigned counter = 0;
     std::cout << "{\"version\":1,\"click_events\":false}\n[[]" << std::endl;
     while(this->is_running){
         this->update();
-        usleep(this->sleep_time);
+        while(counter < this->sleep_time){
+            usleep(499999);
+            counter++;
+        }
+        counter = 0;
     }
 }
 

@@ -37,13 +37,13 @@ public:
     void setSleepTime(int sleep_time);
     const string &getDefault_color() const;
     void setDefault_color(const string &default_color);
-    void generatePresets();
     Block getPreset(const string &p_name);
     Block getDefaultBlock();
 private:
+    void generatePresets();
     void update();
     void readConfigFile(const std::string& p_config_path);
-    int sleep_time;
+    unsigned int sleep_time;
     bool is_running;
     std::vector < Block > blocks;
     std::vector < Block > presets;
