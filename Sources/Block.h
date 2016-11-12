@@ -8,7 +8,6 @@
 #include <algorithm>
 
 
-enum block_align { LEFT, CENTER, RIGHT };
 
 
 
@@ -20,7 +19,7 @@ public:
     std::string execCommand(const char* cmd);
     std::string getFullText();
     void updateText();
-    void setAlign(const block_align& align)
+    void setAlign(const std::string& align)
     {
         this->align = align;
     }
@@ -66,6 +65,8 @@ public:
     void useMarkup(bool p_use_markup = true){
         this->using_markup = p_use_markup;
     }
+    const std::string &getName() const;
+    const std::array<int, 4> &getBorders_width() const;
     void resetValues();
 private:
     std::string command = "echo \"none\"";
@@ -77,8 +78,8 @@ private:
     std::string color = "#cdcdcd";
     std::array<int, 4> borders_width{ { 0, 0, 2, 0 } };
     int separator_block_width = 10;
-    block_align align;
-    bool using_markup = false;
+    std::string align = "left";
+    bool using_markup = true;
 };
 
 #endif // BLOCK_H

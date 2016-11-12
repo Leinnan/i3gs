@@ -37,12 +37,16 @@ public:
     void setSleepTime(int sleep_time);
     const string &getDefault_color() const;
     void setDefault_color(const string &default_color);
+    void generatePresets();
+    Block getPreset(const string &p_name);
+    Block getDefaultBlock();
 private:
     void update();
     void readConfigFile(const std::string& p_config_path);
     int sleep_time;
     bool is_running;
     std::vector < Block > blocks;
+    std::vector < Block > presets;
     std::string default_color = "#CDCDCD";
     std::string default_title = "";
     std::string default_name = "";
@@ -51,7 +55,7 @@ private:
     std::string default_borders_color = "none";
     std::array<int, 4> default_borders_width{ { 0, 0, 2, 0 } };
     int default_separator_block_width = 10;
-    bool default_using_markup = false;
+    bool default_using_markup = true;
 
 };
 

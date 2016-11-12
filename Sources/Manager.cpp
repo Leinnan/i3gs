@@ -9,6 +9,8 @@ Manager::Manager(const std::string& p_config_path)
     this->sleep_time = 10000;
     this->is_running = false;
 
+    this->generatePresets();
+
     if(p_config_path == "none")
         return;
     else
@@ -31,6 +33,15 @@ void Manager::readConfigFile(const std::string& p_config_path)
             if(is_before_blocks){
                 if(isStringStartWith(one_line, "color")){
                     this->default_color = getAllAfterEqualSign(one_line);
+                }
+                if(isStringStartWith(one_line, "bg_color")){
+                    this->default_background = getAllAfterEqualSign(one_line);
+                }
+                if(isStringStartWith(one_line, "borders_color")){
+                    this->default_borders_color = getAllAfterEqualSign(one_line);
+                }
+                if(isStringStartWith(one_line, "separator_width")){
+                    this->default_separator_block_width = std::stoi(getAllAfterEqualSign(one_line));
                 }
                 if(isStringStartWith(one_line, "pango")){
                     if(one_line.find("true"))
@@ -62,6 +73,12 @@ void Manager::readConfigFile(const std::string& p_config_path)
                 }
             }
             else{
+                if(isStringStartWith(one_line, "preset")){
+                    Block preset_block = getPreset(getAllAfterEqualSign(one_line));
+                    if(preset_block.getName() != "preset_not_found"){
+                        config_block = preset_block;
+                    }
+                }
                 if(isStringStartWith(one_line, "title")){
                     config_block.setTitle(getAllAfterEqualSign(one_line));
                 }
@@ -115,8 +132,7 @@ void Manager::readConfigFile(const std::string& p_config_path)
                 this->addBlock(config_block);
             }
             config_block.resetValues();
-            config_block.useMarkup(this->default_using_markup);
-			config_block.setBordersWidth(this->default_borders_width);
+            config_block = this->getDefaultBlock();
             config_block.setName(getAllBetweenBrackets(one_line));
             is_before_blocks = false;
         }
@@ -179,4 +195,53 @@ const string &Manager::getDefault_color() const {
 
 void Manager::setDefault_color(const string &default_color) {
     Manager::default_color = default_color;
+}
+
+void Manager::generatePresets() {
+    Block date = getDefaultBlock();
+    date.setName("DATE");
+    date.setCommand("date '+%H:%M, %d.%m.%y '");
+
+
+    Block hdd = getDefaultBlock();
+    hdd.setName("HDD");
+    hdd.setCommand("df --output=avail -h / |  tail -n 1 | tr -d ' ' | sed 's/G/ GB/g'  | sed 's/M/ MB/g'");
+
+    Block cpu = getDefaultBlock();
+    cpu.setName("CPU");
+    cpu.setCommand("grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage }' | awk '{printf(\"%d%\",$1 + 0.5)}' ");
+
+    Block ram = getDefaultBlock();
+    ram.setName("RAM");
+    ram.setCommand("free | tail -2 | head -1 | awk '{print $3/$2 * 100.0}' | awk '{printf(\"%d% \",$1 + 0.5)}'");
+
+    presets.push_back(date);
+    presets.push_back(hdd);
+    presets.push_back(cpu);
+    presets.push_back(ram);
+}
+
+Block Manager::getPreset(const string &p_name) {
+    Block preset_block;
+    preset_block.setName("preset_not_found");
+    for(unsigned int i = 0; i < presets.size(); i++) {
+        if(presets[i].getName() == p_name){
+            preset_block = presets[i];
+        }
+    }
+    return preset_block;
+}
+
+Block Manager::getDefaultBlock() {
+    Block default_block;
+
+
+    default_block.setBordersWidth(default_borders_width);
+    default_block.setColor(default_color);
+    default_block.useMarkup(default_using_markup);
+    default_block.setBackground(default_background);
+    default_block.setBordersColor(default_borders_color);
+    default_block.setSeparatorBlockWidth(default_separator_block_width);
+
+    return default_block;
 }

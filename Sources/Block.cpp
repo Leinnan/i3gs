@@ -36,6 +36,7 @@ std::string Block::getFullText(){
     m_result += ",\"border_left\": " + std::to_string(borders_width[3]);
     m_result += ",\"border_top\":" + std::to_string(borders_width[0]);
     m_result += ", \"color\": \"" + this->color + "\"";
+    m_result += ", \"align\": \"" + this->align + "\"";
     m_result += " }";
     if(this->content == ""){
         m_result = "{\"full_text\":\"\"}";
@@ -54,4 +55,12 @@ void Block::resetValues() {
     this->borders_color = "none";
     this->color = "#cdcdcd";
     this->using_markup = false;
+}
+
+const std::string &Block::getName() const {
+    return name;
+}
+
+const std::array<int, 4> &Block::getBorders_width() const {
+    return borders_width;
 }
