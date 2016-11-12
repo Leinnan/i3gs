@@ -246,12 +246,17 @@ void Manager::generatePresets() {
     bat.setName("BAT");
     bat.setCommand(battery_script);
 
+    Block wifi = getDefaultBlock();
+    wifi.setName("WIFI");
+    wifi.setCommand("iwgetid -r");
+
     presets.push_back(date);
     presets.push_back(hdd);
     presets.push_back(cpu);
     presets.push_back(ram);
     presets.push_back(mpd);
     presets.push_back(bat);
+    presets.push_back(wifi);
 }
 
 Block Manager::getPreset(const string &p_name) {
