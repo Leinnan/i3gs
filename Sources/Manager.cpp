@@ -40,6 +40,9 @@ void Manager::readConfigFile(const std::string& p_config_path)
                 if(isStringStartWith(one_line, "borders_color")){
                     this->default_borders_color = getAllAfterEqualSign(one_line);
                 }
+                if(isStringStartWith(one_line, "align")){
+                    this->default_align = getAllAfterEqualSign(one_line);
+                }
                 if(isStringStartWith(one_line, "separator_width")){
                     this->default_separator_block_width = std::stoi(getAllAfterEqualSign(one_line));
                 }
@@ -81,6 +84,9 @@ void Manager::readConfigFile(const std::string& p_config_path)
                 }
                 if(isStringStartWith(one_line, "title")){
                     config_block.setTitle(getAllAfterEqualSign(one_line));
+                }
+                if(isStringStartWith(one_line, "align")){
+                    config_block.setAlign(getAllAfterEqualSign(one_line));
                 }
                 if(isStringStartWith(one_line, "color")){
                     config_block.setColor(getAllAfterEqualSign(one_line));
@@ -215,10 +221,37 @@ void Manager::generatePresets() {
     ram.setName("RAM");
     ram.setCommand("free | tail -2 | head -1 | awk '{print $3/$2 * 100.0}' | awk '{printf(\"%d% \",$1 + 0.5)}'");
 
+    Block mpd = getDefaultBlock();
+    mpd.setName("MPD");
+    mpd.setCommand("mpc | head -1 | sed 's/&/and/g'");
+
+    string battery_script = "if [ $(ls /sys/class/power_supply | grep BAT | wc -l) -gt 0 ]; then\n"
+            "    battery_directory=\"/sys/class/power_supply/\"$(ls /sys/class/power_supply | grep BAT | head -1)\"/\"\n"
+            "    energy_now=$(<$battery_directory\"/charge_now\")\n"
+            "    energy_full=$(<$battery_directory\"/charge_full\")\n"
+            "    battery_color=\"\"\n"
+            "    charge=$(($energy_now*100))\n"
+            "    charge=$(($charge/$energy_full))\n"
+            "    \n"
+            "#    if [ \"90\" -gt \"$charge\" ]; then\n"
+            "#        battery_color=\"color=\\\"da2818\\\"\"\n"
+            "#        output=$output\"DSADAS\"\n"
+            "#    fi\n"
+            "    \n"
+            "    status=$(<$battery_directory\"/status\")\n"
+            "    charge=$charge\"%\"\n"
+            "    echo $charge\n"
+            "fi";
+    Block bat = getDefaultBlock();
+    bat.setName("BAT");
+    bat.setCommand(battery_script);
+
     presets.push_back(date);
     presets.push_back(hdd);
     presets.push_back(cpu);
     presets.push_back(ram);
+    presets.push_back(mpd);
+    presets.push_back(bat);
 }
 
 Block Manager::getPreset(const string &p_name) {
@@ -242,6 +275,7 @@ Block Manager::getDefaultBlock() {
     default_block.setBackground(default_background);
     default_block.setBordersColor(default_borders_color);
     default_block.setSeparatorBlockWidth(default_separator_block_width);
+    default_block.setAlign(default_align);
 
     return default_block;
 }

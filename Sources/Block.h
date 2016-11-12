@@ -78,7 +78,7 @@ private:
     std::string color = "#cdcdcd";
     std::array<int, 4> borders_width{ { 0, 0, 2, 0 } };
     int separator_block_width = 10;
-    std::string align = "left";
+    std::string align = "center";
     bool using_markup = true;
 };
 

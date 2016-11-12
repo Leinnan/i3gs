@@ -51,6 +51,7 @@ private:
     std::string default_title = "";
     std::string default_name = "";
     std::string default_content = "";
+    std::string default_align = "center";
     std::string default_background = "none";
     std::string default_borders_color = "none";
     std::array<int, 4> default_borders_width{ { 0, 0, 2, 0 } };
