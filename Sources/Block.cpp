@@ -2,8 +2,10 @@
 
 std::string Block::execCommand(const char* cmd) {
     char buffer[128];
+    std::string command = cmd;
+    command += " 2> /dev/null";//dont display error
     std::string result = "";
-    std::shared_ptr<FILE> pipe(popen(cmd, "r"), pclose);
+    std::shared_ptr<FILE> pipe(popen(command.c_str(), "r"), pclose);
     if (!pipe) throw std::runtime_error("popen() failed!");
     while (!feof(pipe.get())) {
         if (fgets(buffer, 128, pipe.get()) != NULL)
