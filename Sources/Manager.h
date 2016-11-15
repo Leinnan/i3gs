@@ -37,6 +37,8 @@ public:
     void setSleepTime(int sleep_time);
     const string &getDefault_color() const;
     void setDefault_color(const string &default_color);
+    inline void setDefaultBordersColor(const string &p_new_color){ default_borders_color = p_new_color;};
+    inline void setDefaultBackgroundColor(const string &p_new_color){ default_background = p_new_color;};
     Block getPreset(const string &p_name);
     Block getDefaultBlock();
 private:
