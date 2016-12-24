@@ -15,6 +15,10 @@ std::string Block::execCommand(const char* cmd) {
     return result;
 }
 
+Block::Block() :
+borders_width{ { 0, 0, 2, 0 } }{
+}
+
 void Block::updateText(){
     this->content = execCommand(this->command.c_str());
 }

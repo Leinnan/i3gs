@@ -14,7 +14,7 @@
 class Block
 {
 public:
-    Block(){};
+    Block();
     ~Block(){};
     std::string execCommand(const char* cmd);
     std::string getFullText();
@@ -76,7 +76,7 @@ private:
     std::string background = "none";
     std::string borders_color = "none";
     std::string color = "#cdcdcd";
-    std::array<int, 4> borders_width{ { 0, 0, 2, 0 } };
+    std::array<int, 4> borders_width;
     int separator_block_width = 10;
     std::string align = "center";
     bool using_markup = true;
