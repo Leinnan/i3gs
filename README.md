@@ -4,9 +4,6 @@ My own status made for i3-gaps.
 # build-instructions
 Open terminal in repository folder
 ```build-instructions
-mkdir build
-cd build 
-cmake ..
 make
 sudo make install
 ```
