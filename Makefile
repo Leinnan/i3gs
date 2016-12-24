@@ -1,7 +1,7 @@
 #!bin/bash
 
 CXX := g++
-CXXFLAGS := -c -std=c++11
+CXXFLAGS := -c -std=c++11  -Wall -Wextra -pedantic
 LD := g++
 LDFLAGS := -std=gnu++11
 
@@ -21,7 +21,7 @@ clean:
 	rm -rf $(OBJDIR) main.o
 	rm -f $(EXE)
 install: all
-	cp $(EXE) $(DESTDIR)
+	cp -f $(EXE) $(DESTDIR)
 	@echo "Application has been installed!"
 
 $(EXE): $(OBJDIR) $(OBJ)
