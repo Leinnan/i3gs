@@ -1,9 +1,9 @@
 #include <unistd.h>
+#include <stdlib.h>
 #include <iostream>
 #include "Sources/Block.h"
 #include "Sources/Manager.h"
 
-using namespace std;
 
 int main(int argc, char* argv[])
 {
@@ -29,7 +29,12 @@ int main(int argc, char* argv[])
         status.addBlock(status.getPreset("DATE"));
     }
 
-
-    status.start(isatty(STDOUT_FILENO));
+	if(isatty(STDOUT_FILENO)){
+		std::clog << "Detected output to console.\nThanks for using i3gs!\n";
+		status.start(true);
+	}
+	else
+		status.start(false);
+    
     return 0;
 }

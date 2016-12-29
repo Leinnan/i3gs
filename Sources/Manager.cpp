@@ -63,7 +63,7 @@ void Manager::readConfigFile(const std::string& p_config_path)
                         }
                     }
                     if(spaces_in_result >= 3){
-                        istringstream iss(borders_width_string);
+                        std::istringstream iss(borders_width_string);
                         int one_border_width = 0;
                         unsigned int i = 0;
                         while(iss >> one_border_width && i <= 3){
@@ -114,7 +114,7 @@ void Manager::readConfigFile(const std::string& p_config_path)
                         }
                     }
                     if(spaces_in_result >= 3){
-                        istringstream iss(borders_width_string);
+                        std::istringstream iss(borders_width_string);
                         int one_border_width = 0;
                         unsigned int i = 0;
                         while(iss >> one_border_width && i <= 3){
@@ -151,20 +151,27 @@ void Manager::readConfigFile(const std::string& p_config_path)
 
 void Manager::start(const bool& p_is_in_terminal) {
     this->is_running = true;
-    unsigned counter = 0;
+    unsigned int counter = 0;
     
     if(p_is_in_terminal)
-		std::cout << "Detected output to console.\nThanks for using i3gs!\n";
+		printf("\033[s"); // save cursor position, hide cursor
 	else
 		std::cout << "{\"version\":1,\"click_events\":false}\n[[]\n";
 		
+	
     while(this->is_running){
-        this->update(p_is_in_terminal);
+		if(p_is_in_terminal)
+			printf("\033[u\033[K");
+		this->update(p_is_in_terminal);
         while(counter < this->sleep_time){
             usleep(499999);
             counter++;
         }
         counter = 0;
+        
+		if(p_is_in_terminal){
+			std::cout << std::flush;
+		}
     }
 }
 
@@ -176,7 +183,8 @@ void Manager::addBlock(Block p_block)
 
 void Manager::update(const bool& p_is_in_terminal)
 {
-    std::string output = p_is_in_terminal ? "\n" :",\n[";
+	
+    std::string output = p_is_in_terminal ? "" :",\n[";
     for(unsigned int i = 0; i < blocks.size(); i++){
         // for now always update text
         // in future I need to implement better way to handle this
@@ -186,17 +194,20 @@ void Manager::update(const bool& p_is_in_terminal)
 
         // if isnt the the first block we need to add comma before adding new block
         if(i != 0){
-            output += p_is_in_terminal ? "\n" :",";
+            output += p_is_in_terminal ? " | " :",";
         }
-        output += blocks[i].getFullText();
+        if(p_is_in_terminal)
+			output += blocks[i].getTerminalOutput();
+		else
+			output += blocks[i].getFullText();
 
 
     }
     //lets close this update
     if(!p_is_in_terminal)
 		output += "]";
-
-    std::cout << output;
+	
+    printf(output.c_str());
 }
 
 int Manager::getSleepTime() const {
@@ -207,11 +218,11 @@ void Manager::setSleepTime(int sleep_time) {
     Manager::sleep_time = sleep_time;
 }
 
-const string &Manager::getDefault_color() const {
+const std::string &Manager::getDefault_color() const {
     return default_color;
 }
 
-void Manager::setDefaultColor(const string &p_default_color) {
+void Manager::setDefaultColor(const std::string &p_default_color) {
     Manager::default_color = p_default_color;
 }
 
@@ -237,7 +248,7 @@ void Manager::generatePresets() {
     mpd.setName("MPD");
     mpd.setCommand("mpc | head -1 | sed 's/&/and/g'");
 
-    string battery_script = "if [ $(ls /sys/class/power_supply | grep BAT | wc -l) -gt 0 ]; then\n"
+    std::string battery_script = "if [ $(ls /sys/class/power_supply | grep BAT | wc -l) -gt 0 ]; then\n"
             "    battery_directory=\"/sys/class/power_supply/\"$(ls /sys/class/power_supply | grep BAT | head -1)\"/\"\n"
             "    energy_now=$(<$battery_directory\"/charge_now\")\n"
             "    energy_full=$(<$battery_directory\"/charge_full\")\n"
@@ -271,7 +282,7 @@ void Manager::generatePresets() {
     presets.push_back(wifi);
 }
 
-Block Manager::getPreset(const string &p_name) {
+Block Manager::getPreset(const std::string &p_name) {
     Block preset_block;
     preset_block.setName("preset_not_found");
     for(unsigned int i = 0; i < presets.size(); i++) {

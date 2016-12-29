@@ -18,6 +18,7 @@ public:
     ~Block(){};
     std::string execCommand(const char* cmd);
     std::string getFullText();
+	std::string getTerminalOutput();
     void updateText();
     void setAlign(const std::string& align)
     {

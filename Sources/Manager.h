@@ -7,13 +7,13 @@
 #include <vector>
 #include <string>
 #include <unistd.h>
+#include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <array>
 #include "Block.h"
 
-using namespace std;
 
 inline bool isStringStartWith(const std::string& p_base_string, const std::string& p_search_term){
     if(p_base_string.find(p_search_term) == 0)
@@ -35,11 +35,11 @@ public:
     void addBlock(Block p_block);
     int getSleepTime() const;
     void setSleepTime(int sleep_time);
-    const string &getDefault_color() const;
-    void setDefaultColor(const string &p_default_color);
-    inline void setDefaultBordersColor(const string &p_new_color){ default_borders_color = p_new_color;};
-    inline void setDefaultBackgroundColor(const string &p_new_color){ default_background = p_new_color;};
-    Block getPreset(const string &p_name);
+    const std::string &getDefault_color() const;
+    void setDefaultColor(const std::string &p_default_color);
+    inline void setDefaultBordersColor(const std::string &p_new_color){ default_borders_color = p_new_color;};
+    inline void setDefaultBackgroundColor(const std::string &p_new_color){ default_background = p_new_color;};
+    Block getPreset(const std::string &p_name);
     Block getDefaultBlock();
 private:
     void generatePresets();

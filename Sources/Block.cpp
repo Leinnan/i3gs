@@ -23,8 +23,16 @@ void Block::updateText(){
     this->content = execCommand(this->command.c_str());
 }
 
+std::string Block::getTerminalOutput(){
+	return this->title + " " + this->content;
+}
 
 std::string Block::getFullText(){
+	// if no content make it faster
+    if(this->content == ""){
+        return "{\"full_text\":\"\"}";
+    }
+	
     std::string m_result  = "{\"\":\"\",\"full_text\":\"";
     m_result += this->title + " " + this->content;
     m_result += "\",\"name\":\"" + this->name;
@@ -44,9 +52,7 @@ std::string Block::getFullText(){
     m_result += ", \"color\": \"" + this->color + "\"";
     m_result += ", \"align\": \"" + this->align + "\"";
     m_result += " }";
-    if(this->content == ""){
-        m_result = "{\"full_text\":\"\"}";
-    }
+    
     return m_result;
 }
 
