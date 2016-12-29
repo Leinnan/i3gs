@@ -32,7 +32,7 @@ void Manager::readConfigFile(const std::string& p_config_path)
         if(!isStringStartWith(one_line, "[")){
             if(is_before_blocks){
                 if(isStringStartWith(one_line, "color")){
-                    this->setDefault_color(getAllAfterEqualSign(one_line));
+                    this->setDefaultColor(getAllAfterEqualSign(one_line));
                 }
                 if(isStringStartWith(one_line, "sleep_time")){
                     this->setSleepTime(std::stoi(getAllAfterEqualSign(one_line)));
@@ -204,8 +204,8 @@ const string &Manager::getDefault_color() const {
     return default_color;
 }
 
-void Manager::setDefault_color(const string &default_color) {
-    Manager::default_color = default_color;
+void Manager::setDefaultColor(const string &p_default_color) {
+    Manager::default_color = p_default_color;
 }
 
 void Manager::generatePresets() {
