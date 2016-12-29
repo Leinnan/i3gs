@@ -2,3 +2,6 @@
 *project
 /.idea
 *swp
+*.o
+/Object
+i3gs

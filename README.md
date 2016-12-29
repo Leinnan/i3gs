@@ -1,6 +1,8 @@
 # i3-gaps-status
 My own status made for i3-gaps.
 
+![SCREEN](http://i.imgur.com/9ulgqWC.jpg)
+
 # build-instructions
 Open terminal in repository folder
 ```build-instructions
@@ -54,9 +56,6 @@ title=<span weight='heavy' fgcolor='#FFDC00'>   </span>
 borders_color=#FFDC00
 separator_width=0
 ```
-And this is effect:
-
-![SCREEN](http://i.imgur.com/9ulgqWC.jpg)
 
 
 If you want to use config file just set status_command like this:
@@ -66,8 +65,11 @@ status_command i3gs /path/to/the/config
 
 
 
-# ToDo
+# Features and ToDo
 
 - [x] config file support
 - [x] make block presets like CPU/RAM usage or current date
-- [ ] make presets configurable
+- [x] make presets configurable
+- [x] detect output to terminal
+- [ ] handle click_events
+- [ ] detect output to xfce4-genmon-plugin

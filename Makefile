@@ -10,7 +10,7 @@ SRCDIR := Sources
 OBJDIR := Object
 DESTDIR = /usr/bin
 
-OBJ := $(OBJDIR)/Block.o $(OBJDIR)/Manager.o main.o
+OBJ := $(OBJDIR)/Block.o $(OBJDIR)/Manager.o $(OBJDIR)/main.o
 EXE := $(NAME)
 
 .PHONY: all clean
@@ -18,8 +18,8 @@ EXE := $(NAME)
 all: $(EXE)
 
 clean:
-	rm -rf $(OBJDIR) main.o
-	rm -f $(EXE)
+	rm -rf $(OBJDIR)
+	rm -f $(EXE) main.o
 install: all
 	cp -f $(EXE) $(DESTDIR)
 	@echo "Application has been installed!"
@@ -33,5 +33,5 @@ $(OBJDIR):
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(SRCDIR)/%.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-main.o: main.cpp
+$(OBJDIR)/main.o: main.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
