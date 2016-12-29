@@ -149,12 +149,17 @@ void Manager::readConfigFile(const std::string& p_config_path)
         this->addBlock(config_block);
 }
 
-void Manager::start() {
+void Manager::start(const bool& p_is_in_terminal) {
     this->is_running = true;
     unsigned counter = 0;
-    std::cout << "{\"version\":1,\"click_events\":false}\n[[]" << std::endl;
+    
+    if(p_is_in_terminal)
+		std::cout << "Detected output to console.\nThanks for using i3gs!\n";
+	else
+		std::cout << "{\"version\":1,\"click_events\":false}\n[[]\n";
+		
     while(this->is_running){
-        this->update();
+        this->update(p_is_in_terminal);
         while(counter < this->sleep_time){
             usleep(499999);
             counter++;
@@ -163,14 +168,15 @@ void Manager::start() {
     }
 }
 
+
 void Manager::addBlock(Block p_block)
 {
     blocks.push_back(p_block);
 }
 
-void Manager::update()
+void Manager::update(const bool& p_is_in_terminal)
 {
-    std::string output = ",\n[";
+    std::string output = p_is_in_terminal ? "\n" :",\n[";
     for(unsigned int i = 0; i < blocks.size(); i++){
         // for now always update text
         // in future I need to implement better way to handle this
@@ -180,14 +186,15 @@ void Manager::update()
 
         // if isnt the the first block we need to add comma before adding new block
         if(i != 0){
-            output += ",";
+            output += p_is_in_terminal ? "\n" :",";
         }
         output += blocks[i].getFullText();
 
 
     }
     //lets close this update
-    output += "]";
+    if(!p_is_in_terminal)
+		output += "]";
 
     std::cout << output;
 }

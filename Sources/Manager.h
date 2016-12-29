@@ -31,7 +31,7 @@ inline std::string getAllBetweenBrackets(const std::string& p_base_string){
 class Manager {
 public:
     Manager(const std::string& p_config_path = "none");
-    void start();
+    void start(const bool& p_is_in_terminal);
     void addBlock(Block p_block);
     int getSleepTime() const;
     void setSleepTime(int sleep_time);
@@ -43,7 +43,7 @@ public:
     Block getDefaultBlock();
 private:
     void generatePresets();
-    void update();
+    void update(const bool& p_is_in_terminal);
     void readConfigFile(const std::string& p_config_path);
     unsigned int sleep_time;
     bool is_running;

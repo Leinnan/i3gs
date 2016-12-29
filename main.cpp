@@ -7,6 +7,11 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+    bool is_term_output = false;
+    if(isatty(STDOUT_FILENO) == 1)
+		is_term_output = true;
+		
+	std::clog << "Test: " << isatty(STDOUT_FILENO) << "\t" << STDOUT_FILENO << '\n';
     std::string config_path = "none";
     if(argc > 1){
         config_path = argv[1];
@@ -29,6 +34,6 @@ int main(int argc, char* argv[])
         status.addBlock(status.getPreset("DATE"));
     }
 
-    status.start();
+	status.start(is_term_output);
     return 0;
 }
