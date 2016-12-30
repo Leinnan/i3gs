@@ -10,7 +10,6 @@
 
 
 
-
 class Block
 {
 public:
@@ -19,6 +18,7 @@ public:
     std::string execCommand(const char* cmd);
     std::string getFullText();
 	std::string getTerminalOutput();
+	std::string getPangoOutput();
     void updateText();
     void setAlign(const std::string& align)
     {

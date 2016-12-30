@@ -149,7 +149,7 @@ void Manager::readConfigFile(const std::string& p_config_path)
         this->addBlock(config_block);
 }
 
-void Manager::start(const bool& p_is_in_terminal) {
+void Manager::start(const bool& p_is_in_terminal, const bool& p_is_in_xfce) {
     this->is_running = true;
     unsigned int counter = 0;
     
@@ -157,12 +157,16 @@ void Manager::start(const bool& p_is_in_terminal) {
 		printf("\033[s"); // save cursor position, hide cursor
 	else
 		std::cout << "{\"version\":1,\"click_events\":false}\n[[]\n";
-		
+	
+	if(this->run_once){
+		this->update(p_is_in_terminal,p_is_in_xfce);
+		return;
+	}	
 	
     while(this->is_running){
 		if(p_is_in_terminal)
 			printf("\033[u\033[K");
-		this->update(p_is_in_terminal);
+		this->update(p_is_in_terminal,p_is_in_xfce);
         while(counter < this->sleep_time){
             usleep(499999);
             counter++;
@@ -181,10 +185,14 @@ void Manager::addBlock(Block p_block)
     blocks.push_back(p_block);
 }
 
-void Manager::update(const bool& p_is_in_terminal)
+void Manager::update(const bool& p_is_in_terminal,const bool& p_is_in_xfce )
 {
 	
-    std::string output = p_is_in_terminal ? "" :",\n[";
+    std::string output = ",\n[";
+    if(p_is_in_xfce)
+		output = "<txt>";
+    else if(p_is_in_terminal)
+		 output = "";
     for(unsigned int i = 0; i < blocks.size(); i++){
         // for now always update text
         // in future I need to implement better way to handle this
@@ -193,18 +201,22 @@ void Manager::update(const bool& p_is_in_terminal)
 
 
         // if isnt the the first block we need to add comma before adding new block
-        if(i != 0){
+        if(i != 0 and !p_is_in_xfce){
             output += p_is_in_terminal ? " | " :",";
         }
         if(p_is_in_terminal)
 			output += blocks[i].getTerminalOutput();
+		else if(p_is_in_xfce)
+			output += blocks[i].getPangoOutput();
 		else
 			output += blocks[i].getFullText();
 
 
     }
     //lets close this update
-    if(!p_is_in_terminal)
+    if(p_is_in_xfce)
+		output += "</txt>";
+    else if(!p_is_in_terminal)
 		output += "]";
 	
     printf(output.c_str());

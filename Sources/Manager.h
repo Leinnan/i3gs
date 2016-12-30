@@ -31,7 +31,7 @@ inline std::string getAllBetweenBrackets(const std::string& p_base_string){
 class Manager {
 public:
     Manager(const std::string& p_config_path = "none");
-    void start(const bool& p_is_in_terminal);
+    void start(const bool& p_is_in_terminal = false, const bool& p_is_in_xfce = false);
     void addBlock(Block p_block);
     int getSleepTime() const;
     void setSleepTime(int sleep_time);
@@ -41,9 +41,10 @@ public:
     inline void setDefaultBackgroundColor(const std::string &p_new_color){ default_background = p_new_color;};
     Block getPreset(const std::string &p_name);
     Block getDefaultBlock();
+    inline void setRunOnce(const bool &p_run_once = true){this->run_once = p_run_once;};
 private:
     void generatePresets();
-    void update(const bool& p_is_in_terminal);
+    void update(const bool& p_is_in_terminal = false, const bool& p_is_in_xfce = false);
     void readConfigFile(const std::string& p_config_path);
     unsigned int sleep_time;
     bool is_running;
@@ -59,6 +60,7 @@ private:
     std::array<int, 4> default_borders_width{ { 0, 0, 2, 0 } };
     int default_separator_block_width = 10;
     bool default_using_markup = true;
+    bool run_once = false;
 
 };
 

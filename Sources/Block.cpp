@@ -27,6 +27,18 @@ std::string Block::getTerminalOutput(){
 	return this->title + " " + this->content;
 }
 
+std::string Block::getPangoOutput(){
+	std::string m_result = "<span ";
+	
+    if(this->background != "none")
+        m_result += "background='" + this->background + "'";
+        
+	m_result += " >";
+	m_result +=this->title + " " + this->content;
+	m_result += "</span>";
+	return m_result;
+}
+
 std::string Block::getFullText(){
 	// if no content make it faster
     if(this->content == ""){
