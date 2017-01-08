@@ -11,10 +11,8 @@
  makedepends=('gcc-libs')
  depends=('i3-gaps')
  optdepends=('ttf-font-awesome')
- source=('https://github.com/Leinnan/i3gs/archive/master.zip'
- 	'i3gs.conf')
- sha256sums=('2ce87310358883272c1d7185e5aa868384ef12dae16b3dfc5fc61830dde2e2fb'
-            '539a241b830b7384dc89f824013eed93d7308d753e5c499ee747e6626c3eefeb')
+ source=('https://github.com/Leinnan/i3gs/archive/master.zip')
+ sha256sums=('2ce87310358883272c1d7185e5aa868384ef12dae16b3dfc5fc61830dde2e2fb')
 
  build() {
    cd "$srcdir/i3gs-master"
