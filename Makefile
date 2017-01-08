@@ -1,5 +1,8 @@
 #!bin/bash
 
+ifndef PREFIX
+  PREFIX=/usr
+endif
 CXX := g++
 CXXFLAGS := -c -std=c++11  -Wall -Wextra -pedantic
 LD := g++
@@ -8,7 +11,7 @@ LDFLAGS := -std=gnu++11
 NAME := i3gs
 SRCDIR := Sources
 OBJDIR := Object
-DESTDIR = /usr/bin
+
 
 OBJ := $(OBJDIR)/Block.o $(OBJDIR)/Manager.o $(OBJDIR)/main.o
 EXE := $(NAME)
@@ -20,9 +23,12 @@ all: $(EXE)
 clean:
 	rm -rf $(OBJDIR)
 	rm -f $(EXE) main.o
-install: all
-	cp -f $(EXE) $(DESTDIR)
-	@echo "Application has been installed!"
+	
+
+install:
+	install -m 755 -D $(EXE) $(DESTDIR)$(PREFIX)/bin/$(EXE)
+	install -m 755 -D i3gs.conf $(DESTDIR)$(PREFIX)/share/$(NAME)/i3gs.conf
+
 
 $(EXE): $(OBJDIR) $(OBJ)
 	$(LD) $(OBJ) $(LDFLAGS) -o $@
