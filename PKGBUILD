@@ -2,7 +2,7 @@
  # Creator: Leinnan
 
  pkgname=('i3gs')
- pkgver=1.0.0
+ pkgver=0.3.0
  pkgrel=1
  arch=('i686' 'x86_64')
  url="https://github.com/Leinnan/i3gs"

@@ -71,5 +71,5 @@ status_command i3gs /path/to/the/config
 - [x] make block presets like CPU/RAM usage or current date
 - [x] make presets configurable
 - [x] detect output to terminal
+- [x] detect output to xfce4-genmon-plugin
 - [ ] handle click_events
-- [ ] detect output to xfce4-genmon-plugin
