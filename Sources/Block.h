@@ -67,6 +67,9 @@ public:
         this->using_markup = p_use_markup;
     }
     const std::string &getName() const;
+    void setPangoFont(const std::string& p_pango_font){
+        this->pango_font = p_pango_font;
+    }
     const std::array<int, 4> &getBorders_width() const;
     void resetValues();
 private:
@@ -77,6 +80,7 @@ private:
     std::string background = "none";
     std::string borders_color = "none";
     std::string color = "#cdcdcd";
+    std::string pango_font = "";
     std::array<int, 4> borders_width;
     int separator_block_width = 10;
     std::string align = "center";
