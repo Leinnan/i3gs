@@ -9,8 +9,8 @@ LD := g++
 LDFLAGS := -std=gnu++11
 
 NAME := i3gs
-SRCDIR := Sources
-OBJDIR := Object
+SRCDIR := src
+OBJDIR := obj
 
 
 OBJ := $(OBJDIR)/Block.o $(OBJDIR)/Manager.o $(OBJDIR)/main.o
@@ -39,5 +39,5 @@ $(OBJDIR):
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(SRCDIR)/%.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-$(OBJDIR)/main.o: main.cpp
+$(OBJDIR)/main.o: $(SRCDIR)/main.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
